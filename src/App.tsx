@@ -6,6 +6,7 @@ import Footer from './components/layout/Footer';
 import HomePage from './pages/HomePage';
 import RolePlayPage from './pages/RolePlayPage';
 import DashboardPage from './pages/DashboardPage';
+import AuthCallback from './components/auth/AuthCallback';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/role-play" element={<RolePlayPage />} />
               <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/auth/callback" element={<AuthCallback />} />
             </Routes>
           </main>
           <Footer />
