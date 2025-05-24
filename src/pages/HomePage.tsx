@@ -1,29 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Mic, BarChart3, MessageSquare, Award, BarChartHorizontal, Zap, Clock, Target } from 'lucide-react';
+import { Mic, BarChart3, MessageSquare, Award, Brain, Target, Clock, Sparkles } from 'lucide-react';
 
 const HomePage = () => {
+  const [headlineIndex, setHeadlineIndex] = useState(0);
+  const headlines = [
+    { text: "Master Your Sales Skills", highlight: "in Minutes, Not Months" },
+    { text: "Perfect Your Pitch", highlight: "with AI-Powered Practice" },
+    { text: "Close More Deals", highlight: "with Confidence" },
+    { text: "Level Up Your Sales Game", highlight: "Through Smart Practice" }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeadlineIndex((current) => (current + 1) % headlines.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-to-br from-indigo-900 via-indigo-800 to-indigo-900 text-white">
+      <section className="pt-32 pb-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row items-center">
             <div className="lg:w-1/2 mb-10 lg:mb-0">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fadeIn">
-                Master Your <span className="text-teal-400">Sales Skills</span> with AI Role-Play
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fadeIn min-h-[120px]">
+                {headlines[headlineIndex].text}{" "}
+                <span className="text-teal-400">{headlines[headlineIndex].highlight}</span>
               </h1>
               <p className="text-xl text-gray-200 mb-8 animate-fadeInDelay">
-                Practice real-world sales scenarios with our advanced AI voice chat. Get instant feedback, refine your approach, and close more deals.
+                Practice real-world sales scenarios with our advanced AI voice chat. Get instant feedback, refine your approach, and boost your confidence.
               </p>
               <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                 <Link 
                   to="/role-play" 
-                  className="px-8 py-3 rounded-full bg-teal-500 text-white font-medium text-center hover:bg-teal-600 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 animate-fadeInDelay2"
+                  className="px-8 py-3 rounded-lg bg-teal-500 text-white font-medium text-center hover:bg-teal-600 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 animate-fadeInDelay2"
                 >
-                  Start Practicing Now
+                  Start Free Practice
                 </Link>
-                <button className="px-8 py-3 rounded-full border-2 border-white text-white font-medium hover:bg-white hover:text-indigo-900 transition-all duration-300 animate-fadeInDelay3">
+                <button className="px-8 py-3 rounded-lg border-2 border-white text-white font-medium hover:bg-white hover:text-gray-900 transition-all duration-300 animate-fadeInDelay3">
                   Watch Demo
                 </button>
               </div>
@@ -31,8 +47,8 @@ const HomePage = () => {
             <div className="lg:w-1/2 flex justify-center lg:justify-end animate-fadeInRight">
               <div className="relative w-full max-w-md">
                 <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-indigo-500 rounded-2xl transform rotate-6 opacity-30 blur-xl"></div>
-                <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden">
-                  <div className="p-6 bg-gray-900">
+                <div className="relative bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-700">
+                  <div className="p-6">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center space-x-2">
                         <div className="w-3 h-3 rounded-full bg-red-500"></div>
@@ -41,36 +57,20 @@ const HomePage = () => {
                       </div>
                       <div className="text-gray-400 text-xs">SalesPitch Pro</div>
                     </div>
-                  </div>
-                  <div className="p-6">
-                    <div className="flex justify-between items-center mb-4">
-                      <h3 className="text-lg font-semibold text-indigo-900">Software Demo Call</h3>
-                      <span className="text-xs font-medium text-teal-600 bg-teal-100 px-2 py-1 rounded-full">In Progress</span>
-                    </div>
                     <div className="space-y-4">
                       <ChatBubble 
                         isAi={true} 
-                        message="Hi there! I'm interested in your CRM solution, but I'm concerned about the implementation time." 
+                        message="I'm interested in your enterprise solution, but I have concerns about the implementation timeline." 
                       />
                       <ChatBubble 
                         isAi={false} 
-                        message="That's a great question! Our implementation typically takes 2-4 weeks, and we provide dedicated support throughout the process." 
-                      />
-                      <ChatBubble 
-                        isAi={true} 
-                        message="That sounds reasonable. What about data migration from our current system?" 
+                        message="I understand your concern. Let me walk you through our proven 4-week implementation process." 
                       />
                       <div className="flex justify-center my-4">
-                        <div className="px-4 py-2 bg-indigo-100 rounded-full text-indigo-800 text-sm font-medium animate-pulse">
-                          Your turn to respond...
+                        <div className="px-4 py-2 bg-teal-900/30 rounded-full text-teal-400 text-sm font-medium animate-pulse">
+                          AI is analyzing your response...
                         </div>
                       </div>
-                    </div>
-                    <div className="flex items-center mt-6 bg-gray-100 rounded-full p-2">
-                      <button className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white">
-                        <Mic size={18} />
-                      </button>
-                      <div className="mx-3 h-6 flex-grow bg-indigo-200 rounded-full animate-pulse"></div>
                     </div>
                   </div>
                 </div>
@@ -80,99 +80,113 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 bg-white">
+      {/* Problem Section */}
+      <section className="py-20 bg-gray-900 text-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How SalesPitch Pro Works</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Our AI-powered platform helps you master sales conversations through realistic practice and actionable feedback.
-            </p>
+            <span className="text-red-500 font-semibold mb-2 block">THE PROBLEM</span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Traditional sales training is <span className="text-red-500">ineffective</span> and <span className="text-red-500">time-consuming</span>
+            </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <FeatureCard 
-              icon={<MessageSquare size={24} className="text-teal-500" />}
-              title="Realistic Scenarios"
-              description="Practice with AI that mimics real customer objections, questions, and buying signals."
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <ProblemCard 
+              title="Limited Practice Opportunities"
+              description="Role-playing with colleagues is scheduling-dependent and inconsistent."
             />
-            <FeatureCard 
-              icon={<Mic size={24} className="text-teal-500" />}
-              title="Voice Recognition"
-              description="Speak naturally and get real-time feedback on your tone, pace, and word choice."
+            <ProblemCard 
+              title="No Real-Time Feedback"
+              description="Traditional training lacks immediate guidance on improvement areas."
             />
-            <FeatureCard 
-              icon={<BarChart3 size={24} className="text-teal-500" />}
-              title="Performance Analytics"
-              description="Track your progress over time with detailed metrics and improvement suggestions."
+            <ProblemCard 
+              title="Generic Scenarios"
+              description="Standard training fails to address your specific industry challenges."
             />
-            <FeatureCard 
-              icon={<Zap size={24} className="text-teal-500" />}
-              title="Instant Feedback"
-              description="Receive immediate guidance on handling objections and improving your pitch."
-            />
-            <FeatureCard 
-              icon={<Clock size={24} className="text-teal-500" />}
-              title="Practice Anytime"
-              description="Available 24/7 for convenient practice whenever fits your schedule."
-            />
-            <FeatureCard 
-              icon={<Target size={24} className="text-teal-500" />}
-              title="Industry-Specific Training"
-              description="Scenarios tailored to your industry, product type, and customer demographics."
+            <ProblemCard 
+              title="Time-Consuming Process"
+              description="Traditional learning methods take months to show real results."
             />
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-20 bg-gray-50">
+      {/* Solution Section */}
+      <section className="py-20 bg-gray-800 text-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Success Stories</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              See how sales professionals are transforming their results with SalesPitch Pro.
+            <span className="text-teal-400 font-semibold mb-2 block">THE SOLUTION</span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Master Sales Conversations with <span className="text-teal-400">AI-Powered Practice</span>
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Get instant feedback and improve your sales skills through realistic AI role-play scenarios.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <TestimonialCard 
-              quote="After just 3 weeks of practice, my close rate improved by 32%. The AI feedback helped me identify and fix weaknesses in my pitch I didn't even know I had."
-              name="Sarah Johnson"
-              title="Sales Director, TechSolutions Inc."
-              image="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=600"
+            <FeatureCard 
+              icon={<Brain className="text-teal-400" />}
+              title="AI-Powered Scenarios"
+              description="Practice with intelligent AI that adapts to your responses and simulates real customer behavior."
             />
-            <TestimonialCard 
-              quote="The realistic scenarios prepared me for every objection I encountered in real calls. It's like having a sales coach available 24/7."
-              name="Michael Rodriguez"
-              title="Account Executive, Global Services"
-              image="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"
+            <FeatureCard 
+              icon={<BarChart3 className="text-teal-400" />}
+              title="Real-Time Analytics"
+              description="Get instant feedback on your performance, tone, and effectiveness."
             />
-            <TestimonialCard 
-              quote="As a new sales rep, this platform fast-tracked my confidence and competence. My manager noticed the improvement within days."
-              name="Emily Chen"
-              title="Sales Representative, InnovateCorp"
-              image="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=600"
+            <FeatureCard 
+              icon={<Target className="text-teal-400" />}
+              title="Industry-Specific Training"
+              description="Practice scenarios tailored to your specific industry and product type."
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-20 bg-gray-900 text-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
+            <p className="text-xl text-gray-300">Start improving your sales skills in three simple steps</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <StepCard 
+              number="1"
+              title="Choose Your Scenario"
+              description="Select from a variety of industry-specific sales scenarios."
+            />
+            <StepCard 
+              number="2"
+              title="Practice Your Pitch"
+              description="Engage in natural conversation with our AI customer."
+            />
+            <StepCard 
+              number="3"
+              title="Get Instant Feedback"
+              description="Receive detailed analysis and improvement suggestions."
             />
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-indigo-900 to-indigo-800 text-white">
+      <section className="py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Sales Skills?</h2>
-          <p className="text-xl text-gray-200 mb-8 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
             Join thousands of sales professionals who are closing more deals with confidence.
           </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
             <Link 
               to="/role-play" 
-              className="px-8 py-3 rounded-full bg-teal-500 text-white font-medium hover:bg-teal-600 transition-colors duration-300 shadow-lg"
+              className="px-8 py-3 rounded-lg bg-teal-500 text-white font-medium hover:bg-teal-600 transition-colors duration-300 shadow-lg"
             >
               Start Free Trial
             </Link>
-            <button className="px-8 py-3 rounded-full border-2 border-white text-white font-medium hover:bg-white hover:text-indigo-900 transition-all duration-300">
+            <button className="px-8 py-3 rounded-lg border-2 border-white text-white font-medium hover:bg-white hover:text-gray-900 transition-all duration-300">
               Schedule Demo
             </button>
           </div>
@@ -185,8 +199,8 @@ const HomePage = () => {
 const ChatBubble = ({ isAi, message }: { isAi: boolean; message: string }) => (
   <div className={`flex ${isAi ? 'justify-start' : 'justify-end'}`}>
     <div 
-      className={`max-w-xs sm:max-w-sm rounded-2xl px-4 py-3 ${
-        isAi ? 'bg-gray-100 text-gray-800' : 'bg-indigo-600 text-white'
+      className={`max-w-xs sm:max-w-sm rounded-xl px-4 py-3 ${
+        isAi ? 'bg-gray-700 text-gray-100' : 'bg-teal-500 text-white'
       }`}
     >
       <p className="text-sm">{message}</p>
@@ -194,33 +208,33 @@ const ChatBubble = ({ isAi, message }: { isAi: boolean; message: string }) => (
   </div>
 );
 
-const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) => (
-  <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-    <div className="h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center mb-6">
-      {icon}
+const ProblemCard = ({ title, description }: { title: string; description: string }) => (
+  <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+    <div className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center mb-4">
+      <span className="text-red-500">×</span>
     </div>
-    <h3 className="text-xl font-semibold text-gray-900 mb-3">{title}</h3>
-    <p className="text-gray-600">{description}</p>
+    <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
+    <p className="text-gray-400">{description}</p>
   </div>
 );
 
-const TestimonialCard = ({ quote, name, title, image }: { quote: string; name: string; title: string; image: string }) => (
-  <div className="bg-white rounded-xl p-8 shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-    <div className="flex items-center mb-6">
-      <img src={image} alt={name} className="w-14 h-14 rounded-full object-cover mr-4" />
-      <div>
-        <h4 className="font-semibold text-gray-900">{name}</h4>
-        <p className="text-sm text-gray-600">{title}</p>
-      </div>
+const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) => (
+  <div className="bg-gray-700/50 rounded-xl p-6 border border-gray-600">
+    <div className="h-12 w-12 rounded-full bg-gray-800 flex items-center justify-center mb-6">
+      {icon}
     </div>
-    <p className="text-gray-700 italic">"{quote}"</p>
-    <div className="mt-4 flex">
-      {[1, 2, 3, 4, 5].map((star) => (
-        <svg key={star} className="w-5 h-5 text-yellow-500 fill-current" viewBox="0 0 24 24">
-          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-        </svg>
-      ))}
+    <h3 className="text-xl font-semibold text-white mb-3">{title}</h3>
+    <p className="text-gray-300">{description}</p>
+  </div>
+);
+
+const StepCard = ({ number, title, description }: { number: string; title: string; description: string }) => (
+  <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 relative">
+    <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold">
+      {number}
     </div>
+    <h3 className="text-xl font-semibold text-white mb-3 mt-2">{title}</h3>
+    <p className="text-gray-300">{description}</p>
   </div>
 );
 
