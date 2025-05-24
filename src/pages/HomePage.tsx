@@ -4,6 +4,7 @@ import { Mic, BarChart3, MessageSquare, Award, Brain, Target, Clock, Sparkles } 
 
 const HomePage = () => {
   const [headlineIndex, setHeadlineIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const headlines = [
     { text: "Master Your Sales Skills", highlight: "in Minutes, Not Months" },
     { text: "Perfect Your Pitch", highlight: "with AI-Powered Practice" },
@@ -12,10 +13,15 @@ const HomePage = () => {
   ];
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setHeadlineIndex((current) => (current + 1) % headlines.length);
-    }, 3000);
-    return () => clearInterval(timer);
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setHeadlineIndex((current) => (current + 1) % headlines.length);
+        setIsTransitioning(false);
+      }, 500);
+    }, 4000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -25,10 +31,16 @@ const HomePage = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row items-center">
             <div className="lg:w-1/2 mb-10 lg:mb-0">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fadeIn min-h-[120px]">
-                {headlines[headlineIndex].text}{" "}
-                <span className="text-teal-400">{headlines[headlineIndex].highlight}</span>
-              </h1>
+              <div className="relative h-[180px] mb-6">
+                <h1 
+                  className={`text-4xl md:text-5xl lg:text-6xl font-bold leading-tight headline-transition ${
+                    isTransitioning ? 'headline-inactive' : 'headline-active'
+                  }`}
+                >
+                  {headlines[headlineIndex].text}{" "}
+                  <span className="text-teal-400">{headlines[headlineIndex].highlight}</span>
+                </h1>
+              </div>
               <p className="text-xl text-gray-200 mb-8 animate-fadeInDelay">
                 Practice real-world sales scenarios with our advanced AI voice chat. Get instant feedback, refine your approach, and boost your confidence.
               </p>

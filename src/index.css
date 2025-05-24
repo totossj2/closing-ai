@@ -32,6 +32,21 @@
   .animate-fadeInRight {
     animation: fadeInRight 0.7s ease-out 0.3s both;
   }
+
+  .headline-transition {
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .headline-active {
+    opacity: 1;
+  }
+
+  .headline-inactive {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 
 @keyframes fadeIn {
